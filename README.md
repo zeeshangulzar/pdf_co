@@ -1,24 +1,25 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+# How to use
 
-* Ruby version
 
-* System dependencies
+Run following commands at rails console
 
-* Configuration
+* PdfCo::RenderUrl.url_to_png
 
-* Database creation
+* PdfCo::RenderUrl.url_to_jpeg
 
-* Database initialization
+* PdfCo::DocumentParser.templates
 
-* How to run the test suite
+* PdfCo::DocumentParser.get_results
 
-* Services (job queues, cache servers, search engines, etc.)
+* PdfCo::DocumentParser.output_as_csv
 
-* Deployment instructions
+* PdfCo::Convert.to_csv
+
+* PdfCo::Convert.to_json
+
+* PdfCo::Convert.to_text
 
 * ...
