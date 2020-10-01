@@ -6,7 +6,6 @@ module PdfCo
 
       def where(method, resource_path, query = {})
         return custom_error('invalid request method',  400) unless SUPPORTED_METHODS.include?(method)
-
         response, status = get_json(method, resource_path, query)
         status == 200 ? response : errors(response)
       end
@@ -21,7 +20,8 @@ module PdfCo
       end
 
       def get_json(method, root_path, query = {})
-        query_string = query.map{|k,v| "#{k}=#{v}"}.join("&")
+        query_hash = query.is_a?(Hash) ? query : query.to_unsafe_h
+        query_string = query_hash.map{|k,v| "#{k}=#{v}"}.join("&")
         path = query.empty?? root_path : "#{root_path}?#{query_string}"
         response = api.send(method, path)
         [JSON.parse(response.body), response.status]
