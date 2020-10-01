@@ -27,7 +27,7 @@ class RenderImageController < ApplicationController
 
   def render_response(response)
     if response['error'].present?
-      return render json: { status: response['status'], errorCode: response['errorCode'], message: response['message'] }
+      error_response(response)
     else
       # we can convert the url into base64 as well if required.
       return render json: { urls: response['urls'], pageCount: response['pageCount'], name: response['name'] }
