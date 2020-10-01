@@ -7,6 +7,7 @@ module PdfCo
       def where(method, resource_path, query = {})
         return custom_error('invalid request method',  400) unless SUPPORTED_METHODS.include?(method)
         response, status = get_json(method, resource_path, query)
+        log_request(method, resource_path, query, response, status)
         status == 200 ? response : errors(response)
       end
 
@@ -29,6 +30,15 @@ module PdfCo
 
       def api
         Connection.api
+      end
+
+      def log_request(method, resource_path, query, response, status)
+        LogHistory.create(path: resource_path,
+                          http_type: method.to_s,
+                          request_parameters: query,
+                          response_parameters: response,
+                          response_code: status
+                          )
       end
     end
   end

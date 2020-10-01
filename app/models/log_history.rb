@@ -1,0 +1,2 @@
+class LogHistory < ApplicationRecord
+end
