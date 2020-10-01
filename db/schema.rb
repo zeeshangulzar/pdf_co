@@ -20,6 +20,9 @@ ActiveRecord::Schema.define(version: 2020_10_01_082423) do
     t.string "response_code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["http_type"], name: "index_log_histories_on_http_type"
+    t.index ["path"], name: "index_log_histories_on_path"
+    t.index ["response_code"], name: "index_log_histories_on_response_code"
   end
 
 end

@@ -10,8 +10,8 @@ class AddLogHistoryTable < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    # add_index :log_histories, :path
-    # add_index :log_histories, :response_code
-    # add_index :log_histories, :http_type
+    add_index :log_histories, :path
+    add_index :log_histories, :response_code
+    add_index :log_histories, :http_type
   end
 end
