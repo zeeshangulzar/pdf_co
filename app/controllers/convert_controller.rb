@@ -1,13 +1,18 @@
 class ConvertController < ApplicationController
 
+  before_action :set_end_point
+  before_action :set_post_method
+  before_action :log_request
   before_action :validate_params
   before_action :validate_end_point
 
   ALLOWED_ENDPOINTS = ['csv', 'json', 'text']
 
   def show
-    response = PdfCo::Request.where(:post, "pdf/convert/to/#{params[:end_point]}", convert_params)
+    response = PdfCo::Request.where(:post, "pdf/convert/to/#{params[:end_point]}", @log, convert_params)
     return render_response(response)
+  rescue => error
+    internal_error_response(error)
   end
 
   private
@@ -16,12 +21,17 @@ class ConvertController < ApplicationController
     message = []
     message << 'url field is missing'if params[:url].blank?
     message << 'inline field is missing' if params[:inline].blank?
-    return render json: { status: 400, error: true, message: message } if message.present?
+    if message.present?
+      @log.update(error: message)
+      return render json: { status: 400, error: true, message: message }
+    end
   end
 
   def validate_end_point
     return if ALLOWED_ENDPOINTS.include?(params[:end_point])
-    return render json: { status: 400, error: true, message: 'invalid end point' }
+    message = 'invalid end point'
+    @log.update(error: message)
+    return render json: { status: 400, error: true, message: message }
   end
 
   def convert_params
