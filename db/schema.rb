@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_01_082423) do
+ActiveRecord::Schema.define(version: 2020_10_02_042834) do
 
   create_table "log_histories", force: :cascade do |t|
     t.string "path"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2020_10_01_082423) do
     t.string "response_code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "error"
     t.index ["http_type"], name: "index_log_histories_on_http_type"
     t.index ["path"], name: "index_log_histories_on_path"
     t.index ["response_code"], name: "index_log_histories_on_response_code"
